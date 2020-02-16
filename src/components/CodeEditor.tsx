@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { assemble, disassemble, Emulator } from '6502-suite';
 import { byteArrayToHexString, hexStringToByteArray, dasmToString, parseNumber } from '6502-suite/util';
+import { HELLO_WORLD } from '../asm-code/hello-world';
+
+const DEFAULT_CODE = HELLO_WORLD;
 
 export interface ICodeEditorProps {
     emulator: Emulator;
@@ -90,20 +93,3 @@ export default class CodeEditor extends React.Component<ICodeEditorProps, ICodeE
         }
     }
 }
-
-const DEFAULT_CODE = 
-`define max_x $0F
-define max_y $0A
-  LDY #$00
-start:
-  LDX #$00
-start_x:
-  INX
-  STX $0020
-  CPX #max_x
-  BNE start_x
-  INY
-  STY $0028
-  CPY #max_y
-  BNE start
-  BRK`;
