@@ -67,11 +67,27 @@ button {
     text-align: center;
     margin: 0 .5em;
 }
-.status .names {
-  color: whitesmoke;
+.status input {
+    background-color: transparent;
+    border: none;
+    color: green;
+    font: 1em monospace;
 }
-.status .values {
-  color: green;
+.status table {
+    margin: 0 auto;
+    text-align: center;
+}
+.status table th {
+    min-width: 2.3em;
+    padding: 0 .5em;
+    color: whitesmoke;
+}
+.status table td {
+    color: green;
+}
+.status table input {
+    text-align: center;
+    width: 3em;
 }
 .status .controls {
   margin: .5em 0;
@@ -85,6 +101,9 @@ button {
 }
 .status .controls input {
   width: 5em;
+  color: silver;
+  border: 1px solid gray;
+  font: 1em monospace;
 }
 
 .dump code {

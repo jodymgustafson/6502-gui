@@ -61,24 +61,30 @@ export default class ProcessorStatus extends React.Component<IProcessorStatusPro
                         <br></br>
                         total cycles: <span>{this.emulator.totalCycles}</span>
                         <br></br>
-                        <label>cycles/sec <input type="number" min="1" max="9999999" value={this.state.cyclesPerSecond} onChange={e => this.onCpsChange(e)}></input></label>
+                        <label>cycles/sec: <input className="code" type="number" min="1" max="9999999" value={this.state.cyclesPerSecond} onChange={e => this.onCpsChange(e)}></input></label>
                     </div>
-                    <div className="names">
-                        <span title="Accumulator">A</span>
-                        <span title="X Index">X</span>
-                        <span title="Y Index">Y</span>
-                        <span title="Stack Pointer">SP</span>
-                        <span title="Program Counter">PC</span>
-                        <span title="Flags">NV-BDIZC</span>
-                    </div>
-                    <div className="values">
-                        <span>{this.state.accumulator}</span>
-                        <span>{this.state.registerX}</span>
-                        <span>{this.state.registerY}</span>
-                        <span>{this.state.stackPointer}</span>
-                        <span>{this.state.programCounter}</span>
-                        <span>{this.state.flags}</span>
-                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th title="Program Counter">PC</th>
+                                <th title="Accumulator">A</th>
+                                <th title="X Index">X</th>
+                                <th title="Y Index">Y</th>
+                                <th title="Stack Pointer">SP</th>
+                                <th title="Flags">NV-BDIZC</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td title="Click to change PC"><input type="text" value={this.state.programCounter}></input></td>
+                                <td title="Accumulator">{this.state.accumulator}</td>
+                                <td title="X Index">{this.state.registerX}</td>
+                                <td title="Y Index">{this.state.registerY}</td>
+                                <td title="Stack Pointer">{this.state.stackPointer}</td>
+                                <td title="Flags">{this.state.flags}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         );

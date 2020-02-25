@@ -32,7 +32,7 @@ export default class CodeEditor extends React.Component<ICodeEditorProps, ICodeE
     public render() {
         return (
             <div className="code-editor">
-                <textarea rows={10} cols={40} value={this.state.code} onChange={e => this.onCodeChanged(e)}></textarea>
+                <textarea rows={10} cols={80} value={this.state.code} onChange={e => this.onCodeChanged(e)}></textarea>
                 <div>
                     <span>*=<input type="text" value={this.state.baseAddr} onChange={e => this.changeBaseAddress(e)}></input></span>
                     <button onClick={e => this.onAssemble(e)}>Assemble >></button>

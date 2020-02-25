@@ -2,9 +2,11 @@ import React from 'react';
 import './App.css';
 import CodeEditor from './components/CodeEditor';
 import ProcessorStatus from './components/ProcessorStatus';
-import MemoryDump from './components/MemoryDump';
+import MemoryDump, { BYTES_PER_ROW } from './components/MemoryDump';
 import { Emulator } from '6502-suite';
-import { parseNumber } from '6502-suite/util';
+import { parseNumber, toHexString } from '6502-suite/util';
+
+const PAGE_SIZE = 0x100;
 
 export interface IAppProps {
 }
@@ -37,24 +39,29 @@ export default class App extends React.Component<IAppProps, IAppState> {
         );
     }
 
+    /**
+     * Updates the bytes that are shown in the memory dump
+     */
     updateMemory() {
         this.setState({
-            memory: this.emulator.ram.getBytes(this.state.dumpAddress, 0x100)
+            memory: this.emulator.ram.getBytes(this.state.dumpAddress, PAGE_SIZE)
         });
     }
 
-    dumpAddressChanged(a: string): any {
-        let n = parseNumber(a) || 0;
-        n = Math.floor(n / 8) * 8;
+    dumpAddressChanged(newAddr: string): any {
+        // Normalize address to bytes per row boundary
+        let addr = parseNumber(newAddr) || 0;
+        addr = Math.floor(addr / BYTES_PER_ROW) * BYTES_PER_ROW;
 
         this.setState({
-            dumpAddress: n,
-            memory: this.emulator.ram.getBytes(n, 0x100)
+            dumpAddress: addr,
+            memory: this.emulator.ram.getBytes(addr, PAGE_SIZE)
         });
     }
 
     loadBytes(bytes: number[], baseAddr: number) {
         this.emulator.load(bytes, baseAddr);
-        this.updateMemory();
+        this.dumpAddressChanged(baseAddr.toString(10));
+        //this.updateMemory();
     }
 }

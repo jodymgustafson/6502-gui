@@ -29,7 +29,7 @@ strout_1:
 strout_2:
   RTS               ; done
 strout_3:
-  BRK
+  BRK               ; save Y here
 
 chrout:
 ; writes a char to screen

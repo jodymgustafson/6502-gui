@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { toHexString, byteArrayToHexString } from '6502-suite/util';
 
-const BYTES_PER_ROW = 16;
+export const BYTES_PER_ROW = 16;
 
 export interface IMemoryDumpProps {
     startAddr: number;
@@ -10,7 +10,7 @@ export interface IMemoryDumpProps {
 }
 
 export interface IMemoryDumpState {
-    startAddr: string;
+    //startAddr: string;
 }
 
 export default class MemoryDump extends React.Component<IMemoryDumpProps, IMemoryDumpState> {
@@ -18,18 +18,19 @@ export default class MemoryDump extends React.Component<IMemoryDumpProps, IMemor
         super(props);
 
         this.state = {
-            startAddr: "$" + toHexString(this.props.startAddr, 2)
+            //startAddr: "$" + toHexString(this.props.startAddr, 2)
         };
     }
 
     public render() {
         const start = this.props.startAddr;
+        const startHex = "$" + toHexString(this.props.startAddr, 2);
         const memMap = this.createMemMap();
 
         return (
             <div className="dump">
                 <div>
-                    <label>Start Address: <input type="text" onChange={e => this.startAddrChanged(e)} value={this.state.startAddr}></input></label> ;
+                    <label>Start Address: <input type="text" onChange={e => this.startAddrChanged(e)} value={startHex}></input></label> ;
                     <label> Page: <button onClick={() => this.gotoPage(0)}>zero</button>
                     <button onClick={() => this.gotoPage(1)}>stack</button>
                     <button onClick={() => this.incrementPage(1)}>next</button>
@@ -55,16 +56,16 @@ export default class MemoryDump extends React.Component<IMemoryDumpProps, IMemor
 
     gotoPage(page: number): void {
         const addr = "$" + toHexString(page * 0x100, 2);
-        this.setState({
-            startAddr: addr
-        });
+        // this.setState({
+        //     startAddr: addr
+        // });
         this.props.onAddressChange(addr);
     }
 
     startAddrChanged(e: React.ChangeEvent<HTMLInputElement>): void {
-        this.setState({
-            startAddr: e.target.value
-        });
+        // this.setState({
+        //     startAddr: e.target.value
+        // });
 
         this.props.onAddressChange(e.target.value);
     }
