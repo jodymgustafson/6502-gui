@@ -23,7 +23,7 @@ export default class CodeEditor extends React.Component<ICodeEditorProps, ICodeE
         this.state = {
             code: DEFAULT_CODE,
             bytes: "",
-            baseAddr: "$0000"
+            baseAddr: "$0200"
         }
     }
 

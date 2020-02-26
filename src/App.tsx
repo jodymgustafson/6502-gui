@@ -4,7 +4,7 @@ import CodeEditor from './components/CodeEditor';
 import ProcessorStatus from './components/ProcessorStatus';
 import MemoryDump, { BYTES_PER_ROW } from './components/MemoryDump';
 import { Emulator } from '6502-suite';
-import { parseNumber, toHexString } from '6502-suite/util';
+import { parseNumber } from '6502-suite/util';
 
 const PAGE_SIZE = 0x100;
 
@@ -31,10 +31,10 @@ export default class App extends React.Component<IAppProps, IAppState> {
     public render() {
         return (
             <div className="App">
-                <h1>6502 Emulator</h1>
+                <h1>6502 Emulator/Assembler/Disassembler</h1>
                 <CodeEditor emulator={this.emulator} onLoad={(bytes, addr) => this.loadBytes(bytes, addr)}></CodeEditor>
-                <ProcessorStatus emulator={this.emulator} onStep={() => this.updateMemory()}></ProcessorStatus>
-                <MemoryDump startAddr={this.state.dumpAddress} memory={this.state.memory} onAddressChange={a => this.dumpAddressChanged(a)}></MemoryDump>
+                <ProcessorStatus ref="processorStatus" emulator={this.emulator} onStep={() => this.updateMemory()}></ProcessorStatus>
+                <MemoryDump startAddr={this.state.dumpAddress} memory={this.state.memory} onAddressChange={a => this.addressChanged(a)}></MemoryDump>
             </div>
         );
     }
@@ -48,7 +48,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
         });
     }
 
-    dumpAddressChanged(newAddr: string): any {
+    addressChanged(newAddr: string): any {
         // Normalize address to bytes per row boundary
         let addr = parseNumber(newAddr) || 0;
         addr = Math.floor(addr / BYTES_PER_ROW) * BYTES_PER_ROW;
@@ -61,7 +61,8 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
     loadBytes(bytes: number[], baseAddr: number) {
         this.emulator.load(bytes, baseAddr);
-        this.dumpAddressChanged(baseAddr.toString(10));
-        //this.updateMemory();
+        this.emulator.registers.pc = baseAddr;
+        this.addressChanged(baseAddr.toString(10));
+        (this.refs.processorStatus as ProcessorStatus).updateState();
     }
 }

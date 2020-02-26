@@ -54,18 +54,10 @@ button {
 .status {
     margin: 1em 0;
     font: 1.2em monospace;
-}
-.status >div {
-  display: inline-block;
-  background-color: black;
-  padding: .5em;
-  text-align: left;
-}
-.status span {
     display: inline-block;
-    min-width: 2.3em;
-    text-align: center;
-    margin: 0 .5em;
+    background-color: black;
+    padding: .5em;
+    text-align: left;
 }
 .status input {
     background-color: transparent;
@@ -105,7 +97,12 @@ button {
   border: 1px solid gray;
   font: 1em monospace;
 }
-
+.status .controls .info {
+    margin-top: .5em;
+    padding-top: .5em;
+    border-top: 1px solid gray;
+  }
+  
 .dump code {
     margin-top: 1em;
     padding: .5em;
