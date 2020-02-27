@@ -2,6 +2,8 @@ import * as React from 'react';
 import { toHexString, byteArrayToHexString } from '6502-suite/util';
 
 export const BYTES_PER_ROW = 16;
+export const PAGE_SIZE = 0x100;
+const MAX_BYTES = 0xFFFF;
 
 export interface IMemoryDumpProps {
     startAddr: number;
@@ -10,7 +12,6 @@ export interface IMemoryDumpProps {
 }
 
 export interface IMemoryDumpState {
-    //startAddr: string;
 }
 
 export default class MemoryDump extends React.Component<IMemoryDumpProps, IMemoryDumpState> {
@@ -18,7 +19,6 @@ export default class MemoryDump extends React.Component<IMemoryDumpProps, IMemor
         super(props);
 
         this.state = {
-            //startAddr: "$" + toHexString(this.props.startAddr, 2)
         };
     }
 
@@ -39,7 +39,7 @@ export default class MemoryDump extends React.Component<IMemoryDumpProps, IMemor
                 <code>
                     <span className="address">----:  +0 +1 +2 +3 +4 +5 +6 +7 +8 +9 +A +B +C +D +E +F ; 0123456789ABCDEF</span>
                     {memMap.map((x, i) => 
-                    <div key={i}>
+                    <div key={i} className="page-row">
                         <span className="address">{toHexString(start + i * BYTES_PER_ROW, 2)}:</span>
                         <span>{x[0]}</span> ;
                         <span>{x[1]}</span>
@@ -50,29 +50,22 @@ export default class MemoryDump extends React.Component<IMemoryDumpProps, IMemor
     }
 
     incrementPage(amount: number): void {
-        const newAddr = (this.props.startAddr + amount * 0x100) & 0xFFFF;
+        const newAddr = (this.props.startAddr + amount * PAGE_SIZE) & MAX_BYTES;
         this.gotoPage(newAddr >> 8)
     }
 
     gotoPage(page: number): void {
-        const addr = "$" + toHexString(page * 0x100, 2);
-        // this.setState({
-        //     startAddr: addr
-        // });
+        const addr = "$" + toHexString(page * PAGE_SIZE, 2);
         this.props.onAddressChange(addr);
     }
 
     startAddrChanged(e: React.ChangeEvent<HTMLInputElement>): void {
-        // this.setState({
-        //     startAddr: e.target.value
-        // });
-
         this.props.onAddressChange(e.target.value);
     }
 
     private createMemMap(): string[][] {
         const map = [];
-        for (let a = 0; a <= 0xFF; a += BYTES_PER_ROW) {
+        for (let a = 0; a < PAGE_SIZE; a += BYTES_PER_ROW) {
             const row = this.props.memory.slice(a, a + BYTES_PER_ROW);
             map.push([byteArrayToHexString(row), this.byteArrayToCharString(row)]);
         }

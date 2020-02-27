@@ -1,9 +1,10 @@
 export const HELLO_WORLD =
 `; prints "Hello World!"
-define str_lsb $0060    ; address containing pointer to string to print
-define str_msb $0061
-define scrn_ptr $0070   ; address containing next screen position
-define scrn_mem $0080   ; start of screen memory
+*=$0200                 ; Start at $0200
+define str_lsb $0260    ; address containing pointer to string to print
+define str_msb $0261
+define scrn_ptr $0270   ; address containing next screen position
+define scrn_mem $0280   ; start of screen memory
 
   LDX #<data        ; get the lsb of the string
   LDY #>data        ; get the msb of the string

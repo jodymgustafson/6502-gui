@@ -2,11 +2,9 @@ import React from 'react';
 import './App.css';
 import CodeEditor from './components/CodeEditor';
 import ProcessorStatus from './components/ProcessorStatus';
-import MemoryDump, { BYTES_PER_ROW } from './components/MemoryDump';
+import MemoryDump, { BYTES_PER_ROW, PAGE_SIZE } from './components/MemoryDump';
 import { Emulator } from '6502-suite';
 import { parseNumber } from '6502-suite/util';
-
-const PAGE_SIZE = 0x100;
 
 export interface IAppProps {
 }
@@ -23,7 +21,7 @@ export default class App extends React.Component<IAppProps, IAppState> {
         super(props);
 
         this.state = {
-            memory: this.emulator.ram.getBytes(0, 0xFF),
+            memory: this.emulator.ram.getBytes(0, PAGE_SIZE),
             dumpAddress: 0
         };
     }
@@ -61,8 +59,12 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
     loadBytes(bytes: number[], baseAddr: number) {
         this.emulator.load(bytes, baseAddr);
+        // Change pc to the program that got loaded
         this.emulator.registers.pc = baseAddr;
+
         this.addressChanged(baseAddr.toString(10));
-        (this.refs.processorStatus as ProcessorStatus).updateState();
+        
+        // Tell the processor status to update
+        setTimeout(() => (this.refs.processorStatus as ProcessorStatus).updateState(), 0);
     }
 }

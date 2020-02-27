@@ -121,6 +121,9 @@ button {
 .dump .address {
   color: blue;
 }
+.dump .page-row:hover {
+    background-color: #222233;
+}
 
 .code-editor>* {
   vertical-align: top;
