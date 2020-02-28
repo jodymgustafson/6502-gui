@@ -5,6 +5,7 @@ import ProcessorStatus from './components/ProcessorStatus';
 import MemoryDump, { BYTES_PER_ROW, PAGE_SIZE } from './components/MemoryDump';
 import { Emulator } from '6502-suite';
 import { parseNumber } from '6502-suite/util';
+import Menu from './components/Menu';
 
 export interface IAppProps {
 }
@@ -33,6 +34,8 @@ export default class App extends React.Component<IAppProps, IAppState> {
                 <CodeEditor emulator={this.emulator} onLoad={(bytes, addr) => this.loadBytes(bytes, addr)}></CodeEditor>
                 <ProcessorStatus ref="processorStatus" emulator={this.emulator} onStep={() => this.updateMemory()}></ProcessorStatus>
                 <MemoryDump startAddr={this.state.dumpAddress} memory={this.state.memory} onAddressChange={a => this.addressChanged(a)}></MemoryDump>
+
+                <Menu></Menu>
             </div>
         );
     }

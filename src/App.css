@@ -2,6 +2,7 @@
   text-align: center;
   background-color: #282c34;
   color: whitesmoke;
+  min-width: 45em;
 }
 
 .App-logo {
@@ -128,6 +129,10 @@ button {
 .code-editor>* {
   vertical-align: top;
 }
+.code-editor textarea.no-wrap {
+    white-space: nowrap;
+    overflow: auto;
+}
 .code-editor>div {
   display: inline-block;
 }
@@ -138,4 +143,39 @@ button {
 .code-editor input {
   display: inline-block;
   width: 4em;
+}
+
+.main-menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3em;
+    background-color: #222222;
+}
+.main-menu button {
+    background-color: transparent;
+    color: whitesmoke;
+    font-size: 1.5em;
+    border: none;
+    width: 1.25em;
+    height: 1.25em;
+    padding: 0;
+    margin: .25em
+}
+.main-menu button:hover {
+    background-color: whitesmoke;
+    color: #222222;
+}
+.main-menu .help {
+    position: fixed;
+    left: 3em;
+    top: 0;
+    bottom: 0;
+    max-width: 30em;
+    background-color: #333333;
+    color: whitesmoke;
+}
+.main-menu li {
+    text-align: left;
 }

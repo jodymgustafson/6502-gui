@@ -1,8 +1,8 @@
 export const HELLO_WORLD =
-`; prints "Hello World!"
+`; prints "Hello World!" to 'screen memory'
 *=$0200                 ; Start at $0200
-define str_lsb $0260    ; address containing pointer to string to print
-define str_msb $0261
+define str_lsb $00      ; 0page address containing pointer to string to print
+define str_msb $01
 define scrn_ptr $0270   ; address containing next screen position
 define scrn_mem $0280   ; start of screen memory
 
